@@ -13,6 +13,14 @@ var threeSumClosest = function(nums, target) {
                 minimumDifference = target - sum;
             }
 
+            console.log({
+                sum,
+                pivot: nums[i],
+                left: nums[left],
+                right: nums[right],
+                minimumDifference
+            })
+
             if (minimumDifference === 0) break;
 
             if (sum < target) {
@@ -28,3 +36,5 @@ var threeSumClosest = function(nums, target) {
 
 console.log(threeSumClosest([-1,2,1,-4], 1));
 console.log(threeSumClosest([0,0,0], 1));
+console.log(threeSumClosest([-6,-3,-1,2,3,5], 0));
+
