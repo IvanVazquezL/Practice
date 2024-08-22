@@ -36,15 +36,6 @@ function minWindow(s, t) {
                 answer = [end - start + 1, start, end];
             }
 
-            console.log({
-                left,
-                right,
-                start,
-                end,
-                answer,
-                windowCounts
-            })
-
             const leftChar = filteredS[left][1];
             windowCounts.set(leftChar, windowCounts.get(leftChar) - 1);
 
