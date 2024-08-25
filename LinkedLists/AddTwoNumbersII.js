@@ -6,8 +6,11 @@ class ListNode {
 }
 
 var addTwoNumbers = function(l1, l2) {
-    let currentNodeL1 = l1;
-    let currentNodeL2 = l2;
+    const reversedL1 = reverseLinkedList(l1);
+    const reversedL2 = reverseLinkedList(l2);
+
+    let currentNodeL1 = reversedL1;
+    let currentNodeL2 = reversedL2;
     let dummyHead = new ListNode(0);
     let currentNodeAnswer = dummyHead;
     let carry = 0;
@@ -28,19 +31,33 @@ var addTwoNumbers = function(l1, l2) {
         currentNodeL2 = currentNodeL2?.next
     }
 
-    return dummyHead.next;
+    return reverseLinkedList(dummyHead.next);
 };
 
+function reverseLinkedList(head) {
+    let prev = null;
+    let current = head;
+
+    while (current) {
+        let nextNode = current.next;
+        current.next = prev;
+        prev = current;
+        current = nextNode;
+    }
+
+    return prev;
+}
+
 function main() {
-    const l1Node1 = new ListNode(2);
+    const l1Node1 = new ListNode(3);
     const l1Node2 = new ListNode(4);
-    const l1Node3 = new ListNode(3);
+    const l1Node3 = new ListNode(2);
     l1Node1.next = l1Node2;
     l1Node2.next = l1Node3;
 
-    const l2Node1 = new ListNode(5);
+    const l2Node1 = new ListNode(4);
     const l2Node2 = new ListNode(6);
-    const l2Node3 = new ListNode(4);
+    const l2Node3 = new ListNode(5);
     l2Node1.next = l2Node2;
     l2Node2.next = l2Node3;
 
