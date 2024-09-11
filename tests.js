@@ -1,3 +1,4 @@
-const stack = [[1,7]];
+import { someFunction } from './module';
 
-console.log(stack[stack.length - 1][1])
+// Exporting
+export const someFunction = () => {};
