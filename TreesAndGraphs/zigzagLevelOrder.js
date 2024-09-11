@@ -4,7 +4,7 @@ function TreeNode(val, left, right) {
     this.right = (right===undefined ? null : right)
 }
 
-function levelOrder(root) {
+function zigzagLevelOrder(root) {
     const levels = [];
     if (root === null) return levels;
     const queue = [root];
@@ -27,6 +27,7 @@ function levelOrder(root) {
                 queue.push(root.right);
             }
         }
+        if (level % 2 !== 0) levels[level].reverse();
         level++;
     }
 
@@ -42,7 +43,7 @@ function main() {
     // Create root node with children
     const root = new TreeNode(3, t9, t20);
 
-    console.log(levelOrder(root));
+    console.log(zigzagLevelOrder(root));
 }
 
 main();
