@@ -1,38 +1,35 @@
 var cutOffTree = function(forest) {
     const trees = getTrees(forest);
-    console.log(trees)
-    let totalSteps = 0;
-    //  start from (0,0)
+
+    let numberOfSteps = 0;
     let startRow = 0;
     let startColumn = 0;
 
-    for (const [_, targetRow, targetColumn] of trees) {
+    for (const[_, targetRow, targetColumn] of trees) {
         const steps = breadthFirstSearch(forest, startRow, startColumn, targetRow, targetColumn);
-        //  if any tree is unreachable return -1
         if (steps === -1) return -1;
-
-        totalSteps += steps;
+        numberOfSteps += steps;
         startRow = targetRow;
         startColumn = targetColumn;
     }
 
-    return totalSteps;
-};
+    return numberOfSteps;
+}
 
 function breadthFirstSearch(forest, startRow, startColumn, targetRow, targetColumn) {
-    const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]]; // directions for north, south, west, east
+    const directions = [[-1,0], [1,0],[0,-1],[0,1]];
 
     const numRows = forest.length;
     const numColumns = forest[0].length;
-    
-    //  already at the destination
-    const isAtTargetPositionAlready = () => startRow === targetRow && startColumn === targetColumn;
 
+    const isAtTargetPositionAlready = () =>
+        startRow === targetRow &&
+        startColumn === targetColumn;
+    
     if (isAtTargetPositionAlready()) {
         return 0;
     }
-    
-    // queue stores [row, col, distance]
+
     const queue = [[startRow, startColumn, 0]];
     const visited = getVisitedGrid(numRows, numColumns);
 
@@ -43,12 +40,14 @@ function breadthFirstSearch(forest, startRow, startColumn, targetRow, targetColu
             const newRow = row + deltaRow;
             const newColumn = column + deltaColumn;
 
-            const isWithinBounds = () => 
-                newRow >= 0 && newRow < numRows && 
+            const isWithinBounds = () =>
+                newRow >= 0 && newRow < numRows &&
                 newColumn >= 0 && newColumn < numColumns;
             const isUnvisited = () => !visited[newRow][newColumn];
             const isWalkable = () => forest[newRow][newColumn] !== 0;
-            const hasReachedDestination = () => newRow === targetRow && newColumn === targetColumn;
+            const hasReachedDestination = () =>
+                newRow === targetRow && 
+                newColumn === targetColumn;
 
             if (isWithinBounds() && isUnvisited() && isWalkable()) {
                 if (hasReachedDestination()) {
@@ -60,16 +59,17 @@ function breadthFirstSearch(forest, startRow, startColumn, targetRow, targetColu
             }
         }
     }
-    return -1;
+
+    return -1
 }
 
 function getVisitedGrid(numRows, numColumns) {
     const visited = [];
 
-    for (let i = 0; i < numRows; i++) {
-        visited[i] = [];
-        for (let j = 0; j < numColumns; j++) {
-            visited[i][j] = false;
+    for (let row = 0; row < numRows; row++) {
+        visited[row] = [];
+        for (let column = 0; column < numColumns; column++) {
+            visited[row][column] = false;
         }
     }
 
@@ -77,15 +77,14 @@ function getVisitedGrid(numRows, numColumns) {
 }
 
 function getTrees(forest) {
+    const trees = [];
     const numRows = forest.length;
     const numColumns = forest[0].length;
-    const trees = [];
 
     for (let row = 0; row < numRows; row++) {
         for (let column = 0; column < numColumns; column++) {
             if (forest[row][column] > 1) {
-                // height, row, column
-                trees.push([forest[row][column], row, column]);
+                trees.push([forest[row][column], row, column])
             }
         }
     }
